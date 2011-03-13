@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Willem van Bergen"]
   s.email       = ["willem@shopify.com"]
   s.homepage    = ""
-  s.summary     = %q{Log transitions on a state machine to allow analytics.}
-  s.description = %q{Log transitions on a state machine to allow analytics.}
+  s.summary     = %q{Log transitions on a state machine to support business process analytics.}
+  s.description = %q{Log transitions on a state machine to support business process analytics.}
 
   s.rubyforge_project = "state_machine_logger"
 
