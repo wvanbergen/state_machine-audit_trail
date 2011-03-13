@@ -15,7 +15,8 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency('rake')
   s.add_development_dependency('rspec', '~> 2')
-  s.add_development_dependency('activemodel', '~> 3')
+  s.add_development_dependency('activerecord', '~> 3')
+  s.add_development_dependency('sqlite3')
 
   s.files      = %w{}
   s.test_files = %w{}
