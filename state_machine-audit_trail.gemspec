@@ -1,15 +1,15 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
-  s.name        = "state_machine_logger"
+  s.name        = "state_machine-audit_trail"
   s.version     = "0.0.0"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Willem van Bergen"]
   s.email       = ["willem@shopify.com"]
   s.homepage    = ""
-  s.summary     = %q{Log transitions on a state machine to support business process analytics.}
-  s.description = %q{Log transitions on a state machine to support business process analytics.}
+  s.summary     = %q{Log transitions on a state machine to support auditing and business process analytics.}
+  s.description = %q{Log transitions on a state machine to support auditing and  business process analytics.}
 
-  s.rubyforge_project = "state_machine_logger"
+  s.rubyforge_project = "state_machine"
 
   s.add_runtime_dependency('state_machine')
 
