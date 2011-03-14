@@ -13,8 +13,8 @@ module GithubGem
 
   # Detects the main include file of this project using heuristics
   def self.detect_main_include
-    if detect_gemspec_file =~ /^(\.*)\.gemspec$/ && File.exist?("lib/#{$1}.rb")
-      "lib/#{$1}.rb"
+    if File.exist?(File.expand_path("../lib/#{File.basename(detect_gemspec_file, '.gemspec').gsub(/-/, '/')}.rb", detect_gemspec_file))
+      "lib/#{File.basename(detect_gemspec_file, '.gemspec').gsub(/-/, '/')}.rb"
     elsif FileList['lib/*.rb'].length == 1
       FileList['lib/*.rb'].first
     else
