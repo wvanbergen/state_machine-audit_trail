@@ -1,1 +1,37 @@
-=== StateMachine audit trail
+= StateMachine audit trail
+
+The plugin for the state machine gem (see https://github.com/pluginaweek/state_machine) adds support for keeping an audit trail for any state machine. Having an audit trail gives you a complete history of the state changes in your model. This history allows you to investigate incidents or perform analytics, like: "How long does it take on average to go from state a to state b?", or "What percentage of cases goes from state a to b via state c?"
+
+Note: while the state_machine gem integrates with multiple ORMs, this plugin currently only has an ActiveRecord backend. It should be easy to add support for other ActiveModel-based ORMs though.
+
+== Usage
+
+First, make the gem available by adding it to your <tt>Gemfile</tt>
+
+    gem 'state_machine-audit_trail'
+    
+Create a model/table that holds the audit trail. The table needs to have a foreign key to the original object, am "event" field, a "from" state field, a "to" state field, and a "created_at" timestamp that stores the timestamp of the transition. This gem comes with a Rails 3 generator to create a model and a migration like that.
+
+    rails generate state_machine:audit_trail <model> <state_attribute>
+    
+For a model called "Model", and a state attribute "state", this will generate the ModelStateTransition model and an accompanying migration.
+
+Next, tell your state machine you want to keep an audit trail:
+
+    class Model < ActiveRecord::Base
+      state_machine :state, :initial => :start do
+        log_transitions
+        ...
+
+If your audit trail model does not use the default naming scheme, provide it using the <tt>:to</tt> option:
+
+class Model < ActiveRecord::Base
+  state_machine :state, :initial => :start do
+    log_transitions :to => 'ModelAuditTrail'
+    ...
+
+That's it! The plugin will register an <tt>after_transition</tt> callback that is used to log all transitions. It will also log the initial state if there is one.
+
+== About
+
+This plugin is written by Jesse Storimer and Willem van Bergen for Shopify. It is released under the MIT license (see LICENSE)
