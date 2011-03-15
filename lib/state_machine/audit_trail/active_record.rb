@@ -1,4 +1,4 @@
-class StateMachine::AuditTrail::ActiveRecord < StateMachine::AuditTrail::Base
+class StateMachine::AuditTrail::ActiveRecord < StateMachine::AuditTrail::Auditor
   def log(object, event, from, to, timestamp = Time.now)
     # Let ActiveRecord manage the timestamp for us so it does the 
     # right thing with regards to timezones.
