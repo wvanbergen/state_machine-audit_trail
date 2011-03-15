@@ -6,29 +6,29 @@ Note: while the state_machine gem integrates with multiple ORMs, this plugin cur
 
 == Usage
 
-First, make the gem available by adding it to your <tt>Gemfile</tt>
+First, make the gem available by adding it to your <tt>Gemfile</tt>, and run <tt>bundle install</tt>:
 
-    gem 'state_machine-audit_trail'
+  gem 'state_machine-audit_trail'
     
 Create a model/table that holds the audit trail. The table needs to have a foreign key to the original object, am "event" field, a "from" state field, a "to" state field, and a "created_at" timestamp that stores the timestamp of the transition. This gem comes with a Rails 3 generator to create a model and a migration like that.
 
-    rails generate state_machine:audit_trail <model> <state_attribute>
+  rails generate state_machine:audit_trail <model> <state_attribute>
     
 For a model called "Model", and a state attribute "state", this will generate the ModelStateTransition model and an accompanying migration.
 
 Next, tell your state machine you want to keep an audit trail:
 
-    class Model < ActiveRecord::Base
-      state_machine :state, :initial => :start do
-        log_transitions
-        ...
+  class Model < ActiveRecord::Base
+    state_machine :state, :initial => :start do
+      log_transitions
+      ...
 
 If your audit trail model does not use the default naming scheme, provide it using the <tt>:to</tt> option:
 
-class Model < ActiveRecord::Base
-  state_machine :state, :initial => :start do
-    log_transitions :to => 'ModelAuditTrail'
-    ...
+  class Model < ActiveRecord::Base
+    state_machine :state, :initial => :start do
+      log_transitions :to => 'ModelAuditTrail'
+      ...
 
 That's it! The plugin will register an <tt>after_transition</tt> callback that is used to log all transitions. It will also log the initial state if there is one.
 
