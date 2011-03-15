@@ -16,18 +16,18 @@ Create a model/table that holds the audit trail. The table needs to have a forei
     
 For a model called "Model", and a state attribute "state", this will generate the ModelStateTransition model and an accompanying migration.
 
-Next, tell your state machine you want to keep an audit trail:
+Next, tell your state machine you want to store an audit trail:
 
   class Model < ActiveRecord::Base
     state_machine :state, :initial => :start do
-      log_transitions
+      store_audit_trail
       ...
 
 If your audit trail model does not use the default naming scheme, provide it using the <tt>:to</tt> option:
 
   class Model < ActiveRecord::Base
     state_machine :state, :initial => :start do
-      log_transitions :to => 'ModelAuditTrail'
+      store_audit_trail :to => 'ModelAuditTrail'
       ...
 
 That's it! The plugin will register an <tt>after_transition</tt> callback that is used to log all transitions. It will also log the initial state if there is one.
