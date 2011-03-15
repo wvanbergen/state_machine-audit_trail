@@ -53,7 +53,7 @@ end
 class TestModel < ActiveRecord::Base
 
   state_machine :state, :initial => :waiting do # log initial state?
-    log_transitions 
+    store_audit_trail 
 
     event :start do
       transition [:waiting, :stopped] => :started
@@ -68,7 +68,7 @@ end
 class TestModelWithMultipleStateMachines < ActiveRecord::Base
 
   state_machine :first, :initial => :beginning do
-    log_transitions 
+    store_audit_trail 
 
     event :begin_first do
       transition :beginning => :end
@@ -76,7 +76,7 @@ class TestModelWithMultipleStateMachines < ActiveRecord::Base
   end
   
   state_machine :second do
-    log_transitions 
+    store_audit_trail 
 
     event :begin_second do
       transition nil => :beginning

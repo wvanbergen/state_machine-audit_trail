@@ -1,7 +1,7 @@
-module StateMachine::AuditTrail::TransitionLogging
+module StateMachine::AuditTrail::TransitionAuditing
   attr_accessor :transition_class_name
 
-  def log_transitions(options = {})
+  def store_audit_trail(options = {})
     state_machine = self
     state_machine.transition_class_name = (options[:to] || default_transition_class_name).to_s
 
@@ -17,7 +17,7 @@ module StateMachine::AuditTrail::TransitionLogging
   end
 
   def audit_trail
-    @transition_logger ||= StateMachine::AuditTrail.create(transition_class)
+    @transition_auditor ||= StateMachine::AuditTrail.create(transition_class)
   end
 
   private
