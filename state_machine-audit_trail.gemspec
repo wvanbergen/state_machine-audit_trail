@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.version     = "0.0.1"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Willem van Bergen", "Jesse Storimer"]
-  s.email       = ["willem@shopify.com", "jesse.storimer@shopify.com"]
+  s.email       = ["willem@shopify.com", "jesse@shopify.com"]
   s.homepage    = "https://github.com/wvanbergen/state_machine-audit_trail"
   s.summary     = %q{Log transitions on a state machine to support auditing and business process analytics.}
   s.description = %q{Log transitions on a state machine to support auditing and business process analytics.}
