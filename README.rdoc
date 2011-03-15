@@ -1,6 +1,6 @@
 = StateMachine audit trail
 
-The plugin for the state machine gem (see https://github.com/pluginaweek/state_machine) adds support for keeping an audit trail for any state machine. Having an audit trail gives you a complete history of the state changes in your model. This history allows you to investigate incidents or perform analytics, like: "How long does it take on average to go from state a to state b?", or "What percentage of cases goes from state a to b via state c?"
+This plugin for the state machine gem (see https://github.com/pluginaweek/state_machine) adds support for keeping an audit trail for any state machine. Having an audit trail gives you a complete history of the state changes in your model. This history allows you to investigate incidents or perform analytics, like: "How long does it take on average to go from state a to state b?", or "What percentage of cases goes from state a to b via state c?"
 
 Note: while the state_machine gem integrates with multiple ORMs, this plugin currently only has an ActiveRecord backend. It should be easy to add support for other ActiveModel-based ORMs though.
 
