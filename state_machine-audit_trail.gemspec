@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = "state_machine-audit_trail"
-  s.version     = "0.0.0"
+  s.version     = "0.0.1"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Willem van Bergen", "Jesse Storimer"]
   s.email       = ["willem@shopify.com", "jesse.storimer@shopify.com"]
@@ -18,6 +18,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency('activerecord', '~> 3')
   s.add_development_dependency('sqlite3')
 
-  s.files      = %w(.gitignore Gemfile Rakefile lib/state_machine/audit_trail.rb lib/state_machine/audit_trail/active_record.rb lib/state_machine/audit_trail/base.rb lib/state_machine/audit_trail/railtie.rb lib/state_machine/audit_trail/transition_logging.rb lib/state_machine/audit_trail_generator.rb spec/spec_helper.rb spec/state_machine/audit_trail_spec.rb state_machine-audit_trail.gemspec tasks/github_gem.rb)
+  s.files      = %w(.gitignore Gemfile LICENSE README.rdoc Rakefile lib/state_machine-audit_trail.rb lib/state_machine/audit_trail.rb lib/state_machine/audit_trail/active_record.rb lib/state_machine/audit_trail/base.rb lib/state_machine/audit_trail/railtie.rb lib/state_machine/audit_trail/transition_logging.rb lib/state_machine/audit_trail_generator.rb spec/spec_helper.rb spec/state_machine/audit_trail_spec.rb state_machine-audit_trail.gemspec tasks/github_gem.rb)
   s.test_files = %w(spec/state_machine/audit_trail_spec.rb)
 end
