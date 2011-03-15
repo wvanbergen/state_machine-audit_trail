@@ -1,18 +1,13 @@
 class StateMachine::AuditTrail::ActiveRecord < StateMachine::AuditTrail::Base
-  def log(object, transition)
+  def log(object, event, from, to, timestamp = Time.now)
+    # Let ActiveRecord manage the timestamp for us so it does the 
+    # right thing width regards to timezones.
     transition_class.create({
-      foreign_key_field(object) => object.id, :event => transition.event, 
-      :from => transition.from, :to => transition.to
+      foreign_key_field(object) => object.id, :event => event, 
+      :from => from, :to => to
     })
   end
-  
-  def log_initial(object, initial_state)
-    transition_class.create({
-      foreign_key_field(object) => object.id, :event => nil, 
-      :from => nil, :to => initial_state
-    })
-  end
-  
+
   def foreign_key_field(object)
     object.class.name.foreign_key
   end
