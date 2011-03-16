@@ -6,7 +6,7 @@ describe StateMachine::AuditTrail do
     StateMachine::AuditTrail.const_defined?('VERSION').should be_true
   end
   
-  context 'object with a single state machine' do
+  context 'on an object with a single state machine' do
     let!(:state_machine) { TestModel.create! }
     
     it "should log an event with all fields set correctly" do
@@ -28,23 +28,23 @@ describe StateMachine::AuditTrail do
     end
   end
   
-  context 'object with multiple state machines' do
+  context 'on an object with multiple state machines' do
     let!(:state_machine) { TestModelWithMultipleStateMachines.create! }
     
-    it "should log a state_machine specific event for the affected state machine" do
+    it "should log a state transition for the affected state machine" do
       lambda { state_machine.begin_first! }.should change(TestModelWithMultipleStateMachinesFirstTransition, :count).by(1)
     end
 
-    it "should not log a state_machine specific event for the unaffected state machine" do
+    it "should not log a state transition for the unaffected state machine" do
       lambda { state_machine.begin_first! }.should_not change(TestModelWithMultipleStateMachinesSecondTransition, :count)
     end
   end
   
-  context 'object with a state machine having an initial state' do
+  context 'on an object with a state machine having an initial state' do
     let(:state_machine_class) { TestModelWithMultipleStateMachines }
     let(:state_transition_class) { TestModelWithMultipleStateMachinesFirstTransition }
     
-    it "should log a state_machine_class for the inital state" do
+    it "should log a state transition for the inital state" do
       lambda { state_machine_class.create! }.should change(state_transition_class, :count).by(1)
     end
     
@@ -58,7 +58,7 @@ describe StateMachine::AuditTrail do
     end
   end
   
-  context 'object with a state machine not having an initial state' do
+  context 'on an object with a state machine not having an initial state' do
     let(:state_machine_class) { TestModelWithMultipleStateMachines }
     let(:state_transition_class) { TestModelWithMultipleStateMachinesSecondTransition }
     
