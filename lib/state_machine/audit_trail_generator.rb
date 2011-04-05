@@ -5,8 +5,8 @@ class StateMachine::AuditTrailGenerator < ::Rails::Generators::Base
   source_root File.join(File.dirname(__FILE__), 'templates')
   
   argument :source_model
-  argument :state_attribute, :default => 'state'
-  argument :transition_model, :default => nil
+  argument :state_attribute,  :default => 'state'
+  argument :transition_model, :default => ''
 
 
   def create_model
@@ -16,6 +16,6 @@ class StateMachine::AuditTrailGenerator < ::Rails::Generators::Base
   protected
   
   def transition_class_name
-    transition_model || "#{source_model.camelize}#{state_attribute.camelize}Transition"
+    transition_model.blank? ? "#{source_model.camelize}#{state_attribute.camelize}Transition" : transition_model
   end
 end
