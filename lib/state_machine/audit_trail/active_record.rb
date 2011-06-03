@@ -6,6 +6,6 @@ class StateMachine::AuditTrail::ActiveRecord < StateMachine::AuditTrail::Backend
   end
 
   def foreign_key_field(object)
-    object.class.name.foreign_key.to_sym
+    object.class.base_class.name.foreign_key.to_sym
   end
 end

@@ -79,4 +79,9 @@ describe StateMachine::AuditTrail do
       first_transition.created_at.should be_within(10.seconds).of(Time.now.utc)
     end
   end
+
+  it "should properly grab the class name from STI models" do
+    m = TestModelDescendant.create!
+    lambda { m.start! }.should_not raise_error
+  end
 end
