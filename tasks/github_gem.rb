@@ -24,6 +24,8 @@ module GithubGem
 
   class RakeTasks
 
+    include Rake::DSL if Rake.const_defined?('DSL')
+
     attr_reader   :gemspec, :modified_files
     attr_accessor :gemspec_file, :task_namespace, :main_include, :root_dir, :spec_pattern, :test_pattern, :remote, :remote_branch, :local_branch
 
@@ -342,7 +344,7 @@ module GithubGem
       require 'net/https'
       require 'uri'
       
-      uri = URI.parse('https://github.com/wvanbergen/github-gem/raw/master/tasks/github-gem.rake')
+      uri = URI.parse('https://raw.github.com/wvanbergen/github-gem/master/tasks/github-gem.rake')
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
