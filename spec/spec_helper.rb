@@ -12,6 +12,7 @@ ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':me
 
 ActiveRecord::Base.connection.create_table(:test_models) do |t|
   t.string :state
+  t.string :type
   t.timestamps
 end
 
@@ -20,7 +21,6 @@ ActiveRecord::Base.connection.create_table(:test_model_with_multiple_state_machi
   t.string :second
   t.timestamps
 end
-
 
 
 def create_transition_table(owner_class, state)
@@ -49,7 +49,6 @@ class TestModelWithMultipleStateMachinesSecondTransition < ActiveRecord::Base
   belongs_to :test_model
 end
 
-
 class TestModel < ActiveRecord::Base
 
   state_machine :state, :initial => :waiting do # log initial state?
@@ -63,6 +62,9 @@ class TestModel < ActiveRecord::Base
       transition :started => :stopped
     end
   end
+end
+
+class TestModelDescendant < TestModel
 end
 
 class TestModelWithMultipleStateMachines < ActiveRecord::Base

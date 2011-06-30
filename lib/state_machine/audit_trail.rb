@@ -2,7 +2,7 @@ require 'state_machine'
 
 module StateMachine::AuditTrail
     
-  VERSION = "0.0.3"
+  VERSION = "0.0.4"
     
   def self.setup
     StateMachine::Machine.send(:include, StateMachine::AuditTrail::TransitionAuditing)
