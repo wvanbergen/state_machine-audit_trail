@@ -9,3 +9,4 @@ class StateMachine::AuditTrail::ActiveRecord < StateMachine::AuditTrail::Backend
     object.class.base_class.name.foreign_key.to_sym
   end
 end
+
