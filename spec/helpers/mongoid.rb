@@ -1,11 +1,4 @@
-require 'rubygems'
-require 'bundler/setup'
-
-require 'active_record'
 require 'mongoid'
-require 'rspec'
-require 'state_machine/audit_trail'
-
 
 ### Setup test database
 
@@ -16,25 +9,25 @@ end
 
 
 # We probably want to provide a generator for this model and the accompanying migration.
-class TestModelStateTransition
+class MongoidTestModelStateTransition
   include Mongoid::Document
   include Mongoid::Timestamps
-  belongs_to :test_model
+  belongs_to :mongoid_test_model
 end
 
-class TestModelWithMultipleStateMachinesFirstTransition
+class MongoidTestModelWithMultipleStateMachinesFirstTransition
   include Mongoid::Document
   include Mongoid::Timestamps
-  belongs_to :test_model
+  belongs_to :mongoid_test_model
 end
 
-class TestModelWithMultipleStateMachinesSecondTransition
+class MongoidTestModelWithMultipleStateMachinesSecondTransition
   include Mongoid::Document
   include Mongoid::Timestamps
-  belongs_to :test_model
+  belongs_to :mongoid_test_model
 end
 
-class TestModel
+class MongoidTestModel
   
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -52,11 +45,11 @@ class TestModel
   end
 end
 
-class TestModelDescendant < TestModel
+class MongoidTestModelDescendant < MongoidTestModel
   include Mongoid::Timestamps
 end
 
-class TestModelWithMultipleStateMachines
+class MongoidTestModelWithMultipleStateMachines
   
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -73,11 +66,7 @@ class TestModelWithMultipleStateMachines
     store_audit_trail 
 
     event :begin_second do
-      transition nil => :beginning
+      transition nil => :beginning_second
     end
   end
-end
-
-
-RSpec.configure do |config|
 end

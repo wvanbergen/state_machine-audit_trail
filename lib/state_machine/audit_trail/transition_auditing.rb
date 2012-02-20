@@ -24,7 +24,7 @@ module StateMachine::AuditTrail::TransitionAuditing
 
   # Public returns an instance of the class which does the actual audit trail logging
   def audit_trail
-    @transition_auditor ||= StateMachine::AuditTrail.create_audit_trail_logger(transition_class)
+    @transition_auditor ||= StateMachine::AuditTrail::Backend.create_for_transition_class(transition_class)
   end
 
   private

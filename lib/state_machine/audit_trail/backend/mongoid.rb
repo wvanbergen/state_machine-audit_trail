@@ -1,7 +1,7 @@
 # This is the class that does the actual logging.
 # We need one of these per ORM
 
-class StateMachine::AuditTrail::Mongoid < StateMachine::AuditTrail::Backend
+class StateMachine::AuditTrail::Backend::Mongoid < StateMachine::AuditTrail::Backend
 
   # Public writes the log to the database
   #
