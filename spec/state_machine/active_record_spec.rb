@@ -26,14 +26,14 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
       lambda { state_machine.start && state_machine.stop && state_machine.start }.should change(ActiveRecordTestModelStateTransition, :count).by(3)
     end
 
-    it "should do nothing when the transition is not exectuted successfully" do
+    it "should do nothing when the transition is not executed successfully" do
       lambda { state_machine.stop }.should_not change(ActiveRecordTestModelStateTransition, :count)
     end
   end
 
   context 'on an object with a single state machine that wants to log context' do
     before do
-      backend = StateMachine::AuditTrail::Backend.create_for_transition_class(ActiveRecordTestModelWithContextStateTransition)
+      backend = StateMachine::AuditTrail::Backend.create_for_transition_class(ActiveRecordTestModelWithContextStateTransition, :context)
     end
 
     let!(:state_machine) { ActiveRecordTestModelWithContext.create! }

@@ -56,7 +56,7 @@ end
 
 class ActiveRecordTestModelWithContext < ActiveRecord::Base
   state_machine :state, :initial => :waiting do # log initial state?
-    store_audit_trail
+    store_audit_trail :context_to_log => :context
 
     event :start do
       transition [:waiting, :stopped] => :started
