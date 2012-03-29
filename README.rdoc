@@ -16,11 +16,11 @@ It should be easy to add new backends by looking at the implementation of the cu
 First, make the gem available by adding it to your <tt>Gemfile</tt>, and run <tt>bundle install</tt>:
 
   gem 'state_machine-audit_trail'
-    
-Create a model/table that holds the audit trail. The table needs to have a foreign key to the original object, am "event" field, a "from" state field, a "to" state field, and a "created_at" timestamp that stores the timestamp of the transition. This gem comes with a Rails 3 generator to create a model and a migration like that.
+
+Create a model/table that holds the audit trail. The table needs to have a foreign key to the original object, an "event" field, a "from" state field, a "to" state field, and a "created_at" timestamp that stores the timestamp of the transition. This gem comes with a Rails 3 generator to create a model and a migration like that.
 
   rails generate state_machine:audit_trail <model> <state_attribute>
-    
+
 For a model called "Model", and a state attribute "state", this will generate the ModelStateTransition model and an accompanying migration.
 
 Next, tell your state machine you want to store an audit trail:
@@ -41,4 +41,4 @@ That's it! The plugin will register an <tt>after_transition</tt> callback that i
 
 == About
 
-This plugin is written by Jesse Storimer and Willem van Bergen for Shopify. Mongoid support was contributed by Siddharth (https://github.com/svs). It is released under the MIT license (see LICENSE).  
+This plugin is written by Jesse Storimer and Willem van Bergen for Shopify. Mongoid support was contributed by Siddharth (https://github.com/svs). It is released under the MIT license (see LICENSE).
