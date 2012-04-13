@@ -39,6 +39,9 @@ If your audit trail model does not use the default naming scheme, provide it usi
 
 That's it! The plugin will register an <tt>after_transition</tt> callback that is used to log all transitions. It will also log the initial state if there is one.
 
+If you would like to store additional messages in the audit trail, you can do so with the following:
+    store_audit_trail :context_to_log => :state_message # Will grab the results of the state_message method on the model and store it in a field called state_message on the audit trail model
+
 == About
 
 This plugin is written by Jesse Storimer and Willem van Bergen for Shopify. Mongoid support was contributed by Siddharth (https://github.com/svs). It is released under the MIT license (see LICENSE).
