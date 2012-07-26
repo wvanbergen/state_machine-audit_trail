@@ -31,7 +31,7 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
     end
   end
 
-  context 'on an object with a single state machine that wants to log context' do
+  context 'on an object with a single state machine that wants to log a single context' do
     before do
       backend = StateMachine::AuditTrail::Backend.create_for_transition_class(ActiveRecordTestModelWithContextStateTransition, :context)
     end
@@ -41,7 +41,7 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
     it "should log an event with all fields set correctly" do
       state_machine.start!
       last_transition = ActiveRecordTestModelWithContextStateTransition.where(:active_record_test_model_with_context_id => state_machine.id).last
-      last_transition.context.should_not be_nil
+      last_transition.context.should == state_machine.context
     end
   end
 

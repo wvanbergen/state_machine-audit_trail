@@ -68,7 +68,7 @@ class ActiveRecordTestModelWithContext < ActiveRecord::Base
   end
 
   def context
-    Date.current
+    "Some context"
   end
 end
 
@@ -102,7 +102,7 @@ def create_transition_table(owner_class, state)
     t.string :event
     t.string :from
     t.string :to
-    t.string :context if add_context #(owner_class.instance_methods.include? :context)
+    t.string :context if add_context
     t.datetime :created_at
   end
 end
