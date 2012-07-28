@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rspec', '~> 2')
   s.add_development_dependency('activerecord', '~> 3')
   s.add_development_dependency('sqlite3')
-  s.add_development_dependency('mongoid')
+  s.add_development_dependency('mongoid', '~> 2')
   s.add_development_dependency('bson_ext')
 
   s.files      = %w(.gitignore .travis.yml Gemfile LICENSE README.rdoc Rakefile lib/state_machine-audit_trail.rb lib/state_machine/audit_trail.rb lib/state_machine/audit_trail/backend.rb lib/state_machine/audit_trail/backend/active_record.rb lib/state_machine/audit_trail/backend/mongoid.rb lib/state_machine/audit_trail/railtie.rb lib/state_machine/audit_trail/transition_auditing.rb lib/state_machine/audit_trail_generator.rb spec/helpers/active_record.rb spec/helpers/mongoid.rb spec/spec_helper.rb spec/state_machine/active_record_spec.rb spec/state_machine/audit_trail_spec.rb spec/state_machine/mongoid_spec.rb state_machine-audit_trail.gemspec tasks/github_gem.rb)
