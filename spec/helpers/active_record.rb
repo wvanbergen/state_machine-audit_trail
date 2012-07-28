@@ -94,10 +94,9 @@ class ActiveRecordTestModelWithMultipleStateMachines < ActiveRecord::Base
   end
 end
 
-def create_transition_table(owner_class, state)
+def create_transition_table(owner_class, state, add_context = false)
   class_name = "#{owner_class.name}#{state.to_s.camelize}Transition"
   ActiveRecord::Base.connection.create_table(class_name.tableize) do |t|
-    add_context = owner_class.instance_methods.include? :context
     t.integer owner_class.name.foreign_key
     t.string :event
     t.string :from
@@ -108,6 +107,6 @@ def create_transition_table(owner_class, state)
 end
 
 create_transition_table(ActiveRecordTestModel, :state)
-create_transition_table(ActiveRecordTestModelWithContext, :state)
+create_transition_table(ActiveRecordTestModelWithContext, :state, true)
 create_transition_table(ActiveRecordTestModelWithMultipleStateMachines, :first)
 create_transition_table(ActiveRecordTestModelWithMultipleStateMachines, :second)  
