@@ -103,4 +103,11 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
       lambda { m.start! }.should_not raise_error
     end
   end
+
+  context 'on a class using STI with own state machine' do
+    it "should properly grab the class name from STI models" do
+      m = ActiveRecordTestModelDescendantWithOwnStateMachine.create!
+      lambda { m.complete! }.should_not raise_error
+    end
+  end
 end

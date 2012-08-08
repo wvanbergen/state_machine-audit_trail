@@ -75,6 +75,16 @@ end
 class ActiveRecordTestModelDescendant < ActiveRecordTestModel
 end
 
+class ActiveRecordTestModelDescendantWithOwnStateMachine < ActiveRecordTestModel
+  state_machine :state, :initial => :new do
+    store_audit_trail
+
+    event :complete do
+      transition [:new] => :completed
+    end
+  end
+end
+
 class ActiveRecordTestModelWithMultipleStateMachines < ActiveRecord::Base
 
   state_machine :first, :initial => :beginning do
