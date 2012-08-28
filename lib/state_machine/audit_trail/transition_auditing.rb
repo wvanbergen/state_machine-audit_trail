@@ -4,7 +4,7 @@
 
 module StateMachine::AuditTrail::TransitionAuditing
   attr_accessor :transition_class_name
-  
+
   # Public tells the state machine to hook in the appropriate before / after behaviour
   #
   # options: a Hash of options. keys that are used are :to => CustomTransitionClass,
@@ -35,6 +35,7 @@ module StateMachine::AuditTrail::TransitionAuditing
   end
 
   def default_transition_class_name
-    "#{owner_class.name}#{attribute.to_s.camelize}Transition"
+    owner_class_or_base_class = owner_class.respond_to?(:base_class) ? owner_class.base_class : owner_class
+    "#{owner_class_or_base_class.name}#{attribute.to_s.camelize}Transition"
   end
 end
