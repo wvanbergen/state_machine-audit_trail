@@ -1,7 +1,11 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'state_machine/audit_trail'
+
 Gem::Specification.new do |s|
   s.name        = "state_machine-audit_trail"
-  s.version     = "0.1.3"
+  s.version     = StateMachine::AuditTrail::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Willem van Bergen", "Jesse Storimer"]
   s.email       = ["willem@shopify.com", "jesse@shopify.com"]
