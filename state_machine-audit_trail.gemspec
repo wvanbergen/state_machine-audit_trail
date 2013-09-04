@@ -1,7 +1,12 @@
 # -*- encoding: utf-8 -*-
+
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'state_machine/audit_trail/version'
+
 Gem::Specification.new do |s|
   s.name        = "state_machine-audit_trail"
-  s.version     = "0.1.3"
+  s.version     = StateMachine::AuditTrail::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Willem van Bergen", "Jesse Storimer"]
   s.email       = ["willem@shopify.com", "jesse@shopify.com"]
@@ -20,6 +25,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency('mongoid', '~> 2')
   s.add_development_dependency('bson_ext')
 
-  s.files      = %w(.gitignore .travis.yml Gemfile LICENSE README.rdoc Rakefile lib/state_machine-audit_trail.rb lib/state_machine/audit_trail.rb lib/state_machine/audit_trail/backend.rb lib/state_machine/audit_trail/backend/active_record.rb lib/state_machine/audit_trail/backend/mongoid.rb lib/state_machine/audit_trail/railtie.rb lib/state_machine/audit_trail/transition_auditing.rb lib/state_machine/audit_trail_generator.rb spec/helpers/active_record.rb spec/helpers/mongoid.rb spec/spec_helper.rb spec/state_machine/active_record_spec.rb spec/state_machine/audit_trail_spec.rb spec/state_machine/mongoid_spec.rb state_machine-audit_trail.gemspec tasks/github_gem.rb)
-  s.test_files = %w(spec/state_machine/active_record_spec.rb spec/state_machine/audit_trail_spec.rb spec/state_machine/mongoid_spec.rb)
+  s.files = `git ls-files`.split($/)
+  s.test_files = s.files.grep(%r{^(test|spec|features)/})
 end
