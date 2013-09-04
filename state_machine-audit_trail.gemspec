@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/wvanbergen/state_machine-audit_trail"
   s.summary     = %q{Log transitions on a state machine to support auditing and business process analytics.}
   s.description = %q{Log transitions on a state machine to support auditing and business process analytics.}
+  s.license     = "MIT"
 
   s.rubyforge_project = "state_machine"
 
