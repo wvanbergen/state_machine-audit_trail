@@ -7,6 +7,10 @@ rvm:
   - 2.0.0
   - ree
   - ruby-head
+gemfile:
+ - Gemfile.activerecord3.mongoid2
+ - Gemfile.activerecord3.mongoid3
+ - Gemfile.activerecord4.mongoid4
 matrix:
   allow_failures:
     - rvm: ruby-head
