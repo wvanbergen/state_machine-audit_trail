@@ -4,7 +4,7 @@ require 'helpers/mongoid'
 describe StateMachine::AuditTrail::Backend::Mongoid do
 
   it "should create a Mongoid backend" do
-    backend = StateMachine::AuditTrail::Backend.create_for_transition_class(MongoidTestModelStateTransition)
+    backend = StateMachine::AuditTrail::Backend.create_for_transition_class(MongoidTestModelStateTransition, MongoidTestModel)
     backend.should be_instance_of(StateMachine::AuditTrail::Backend::Mongoid)
   end
   

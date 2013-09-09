@@ -4,8 +4,13 @@ require 'helpers/active_record'
 describe StateMachine::AuditTrail::Backend::ActiveRecord do
 
   it "should create an ActiveRecord backend" do
-    backend = StateMachine::AuditTrail::Backend.create_for_transition_class(ActiveRecordTestModelStateTransition)
+    backend = StateMachine::AuditTrail::Backend.create_for_transition_class(ActiveRecordTestModelStateTransition, ActiveRecordTestModel)
     backend.should be_instance_of(StateMachine::AuditTrail::Backend::ActiveRecord)
+  end
+
+  it "should create a has many association on the state machine owner" do
+    backend = StateMachine::AuditTrail::Backend.create_for_transition_class(ActiveRecordTestModelStateTransition, ActiveRecordTestModel)
+    ActiveRecordTestModel.reflect_on_association(:active_record_test_model_state_transitions).collection?.should be_true
   end
 
   context 'on an object with a single state machine' do
@@ -33,7 +38,7 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
 
   context 'on an object with a single state machine that wants to log a single context' do
     before do
-      backend = StateMachine::AuditTrail::Backend.create_for_transition_class(ActiveRecordTestModelWithContextStateTransition, :context)
+      backend = StateMachine::AuditTrail::Backend.create_for_transition_class(ActiveRecordTestModelWithContextStateTransition, ActiveRecordTestModelWithContext, :context)
     end
 
     let!(:state_machine) { ActiveRecordTestModelWithContext.create! }
