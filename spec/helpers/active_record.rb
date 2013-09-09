@@ -109,8 +109,8 @@ def create_transition_table(owner_class, state, add_context = false)
   ActiveRecord::Base.connection.create_table(class_name.tableize) do |t|
     t.integer owner_class.name.foreign_key
     t.string :event
-    t.string :from
-    t.string :to
+    t.string :from_state
+    t.string :to_state
     t.string :context if add_context
     t.datetime :created_at
   end
@@ -119,4 +119,4 @@ end
 create_transition_table(ActiveRecordTestModel, :state)
 create_transition_table(ActiveRecordTestModelWithContext, :state, true)
 create_transition_table(ActiveRecordTestModelWithMultipleStateMachines, :first)
-create_transition_table(ActiveRecordTestModelWithMultipleStateMachines, :second)  
+create_transition_table(ActiveRecordTestModelWithMultipleStateMachines, :second)
