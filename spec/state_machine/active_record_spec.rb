@@ -13,9 +13,7 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
     ActiveRecordTestModel.reflect_on_association(:active_record_test_model_state_transitions).collection?.should be_true
   end
 
-  context 'on an object with a single state machine' do
-    let!(:state_machine) { ActiveRecordTestModel.create! }
-
+  shared_examples "a state machine audit trail" do
     it "should log an event with all fields set correctly" do
       state_machine.start!
       last_transition = ActiveRecordTestModelStateTransition.where(:active_record_test_model_id => state_machine.id).last
@@ -27,12 +25,26 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
       last_transition.created_at.should be_within(10.seconds).of(Time.now.utc)
     end
 
+    it "should do nothing when the transition is not executed successfully" do
+      lambda { state_machine.stop }.should_not change(ActiveRecordTestModelStateTransition, :count)
+    end
+  end
+
+  context 'on an existing object with a single state machine' do
+    let!(:state_machine) { ActiveRecordTestModel.create! }
+    include_examples "a state machine audit trail"
+
     it "should log multiple events" do
       lambda { state_machine.start && state_machine.stop && state_machine.start }.should change(ActiveRecordTestModelStateTransition, :count).by(3)
     end
+  end
 
-    it "should do nothing when the transition is not executed successfully" do
-      lambda { state_machine.stop }.should_not change(ActiveRecordTestModelStateTransition, :count)
+  context 'on a new object with a single state machine' do
+    let!(:state_machine) { ActiveRecordTestModel.new }
+    include_examples "a state machine audit trail"
+
+    it "should log multiple events including the first event from save" do
+      lambda { state_machine.start && state_machine.stop && state_machine.start }.should change(ActiveRecordTestModelStateTransition, :count).by(4)
     end
   end
 
@@ -99,6 +111,23 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
       first_transition.from.should be_nil
       first_transition.to.should == 'beginning_second'
       first_transition.created_at.should be_within(10.seconds).of(Time.now.utc)
+    end
+
+    it "should be fine transitioning before saved on an :action => nil state machine" do
+      lambda do
+        machine = state_machine_class.new
+        machine.begin_third
+        machine.save!
+      end.should change(ActiveRecordTestModelWithMultipleStateMachinesThirdTransition, :count).by(1)
+    end
+
+    it "should queue up transitions to be saved before being saved on an :action => nil state machine" do
+      lambda do
+        machine = state_machine_class.new
+        machine.begin_third
+        machine.end_third
+        machine.save!
+      end.should change(ActiveRecordTestModelWithMultipleStateMachinesThirdTransition, :count).by(2)
     end
   end
 

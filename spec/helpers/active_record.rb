@@ -39,6 +39,10 @@ class ActiveRecordTestModelWithMultipleStateMachinesSecondTransition < ActiveRec
   belongs_to :test_model
 end
 
+class ActiveRecordTestModelWithMultipleStateMachinesThirdTransition < ActiveRecord::Base
+  belongs_to :test_model
+end
+
 class ActiveRecordTestModel < ActiveRecord::Base
 
   state_machine :state, :initial => :waiting do # log initial state?
@@ -102,6 +106,18 @@ class ActiveRecordTestModelWithMultipleStateMachines < ActiveRecord::Base
       transition nil => :beginning_second
     end
   end
+
+  state_machine :third, :action => nil do
+    store_audit_trail
+
+    event :begin_third do
+      transition nil => :beginning_third
+    end
+
+    event :end_third do
+      transition :beginning_third => :done_third
+    end
+  end
 end
 
 def create_transition_table(owner_class, state, add_context = false)
@@ -119,4 +135,5 @@ end
 create_transition_table(ActiveRecordTestModel, :state)
 create_transition_table(ActiveRecordTestModelWithContext, :state, true)
 create_transition_table(ActiveRecordTestModelWithMultipleStateMachines, :first)
-create_transition_table(ActiveRecordTestModelWithMultipleStateMachines, :second)  
+create_transition_table(ActiveRecordTestModelWithMultipleStateMachines, :second)
+create_transition_table(ActiveRecordTestModelWithMultipleStateMachines, :third)
