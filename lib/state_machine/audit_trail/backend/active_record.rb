@@ -13,6 +13,13 @@ class StateMachine::AuditTrail::Backend::ActiveRecord < StateMachine::AuditTrail
     # right thing with regards to timezones.
     params = {:event => event, :from => from, :to => to}
     params[self.context_to_log] = object.send(self.context_to_log) unless self.context_to_log.nil?
-    object.send(@association).create(params)
+
+    if object.new_record?
+      object.send(@association).build(params)
+    else
+      object.send(@association).create(params)
+    end
+
+    nil
   end
 end

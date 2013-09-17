@@ -16,9 +16,11 @@ module StateMachine::AuditTrail::TransitionAuditing
       state_machine.audit_trail(options[:context_to_log]).log(object, transition.event, transition.from, transition.to)
     end
 
-    state_machine.owner_class.after_create do |object|
-      if !object.send(state_machine.attribute).nil?
-        state_machine.audit_trail(options[:context_to_log]).log(object, nil, nil, object.send(state_machine.attribute))
+    unless state_machine.action == nil
+      state_machine.owner_class.after_create do |object|
+        if !object.send(state_machine.attribute).nil?
+          state_machine.audit_trail(options[:context_to_log]).log(object, nil, nil, object.send(state_machine.attribute))
+        end
       end
     end
   end
