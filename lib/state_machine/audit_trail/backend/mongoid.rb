@@ -12,7 +12,7 @@ class StateMachine::AuditTrail::Backend::Mongoid < StateMachine::AuditTrail::Bac
   def log(object, event, from, to, timestamp = Time.now)
     tc = transition_class
     foreign_key_field = tc.relations.keys.first
-    transition_class.create(foreign_key_field => object, :event => event, :from => from, :to => to, :create_at => timestamp)
+    transition_class.create(foreign_key_field => object, :event => event, :from => from, :to => to, :created_at => timestamp)
   end
 
 
