@@ -120,6 +120,24 @@ class ActiveRecordTestModelWithMultipleStateMachines < ActiveRecord::Base
   end
 end
 
+module SomeNamespace
+  class ActiveRecordTestModel < ActiveRecord::Base
+
+    state_machine :state, :initial => :waiting do # log initial state?
+      store_audit_trail
+
+      event :start do
+        transition [:waiting, :stopped] => :started
+      end
+
+      event :stop do
+        transition :started => :stopped
+      end
+    end
+  end
+end
+
+
 def create_transition_table(owner_class, state, add_context = false)
   class_name = "#{owner_class.name}#{state.to_s.camelize}Transition"
   ActiveRecord::Base.connection.create_table(class_name.tableize) do |t|

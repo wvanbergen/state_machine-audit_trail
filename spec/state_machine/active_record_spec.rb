@@ -13,6 +13,11 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
     ActiveRecordTestModel.reflect_on_association(:active_record_test_model_state_transitions).collection?.should be_true
   end
 
+  it "should handle namespaced models" do
+    backend = StateMachine::AuditTrail::Backend.create_for_transition_class(ActiveRecordTestModelStateTransition, SomeNamespace::ActiveRecordTestModel)
+    SomeNamespace::ActiveRecordTestModel.reflect_on_association(:active_record_test_model_state_transitions).collection?.should be_true
+  end
+
   shared_examples "a state machine audit trail" do
     it "should log an event with all fields set correctly" do
       state_machine.start!
