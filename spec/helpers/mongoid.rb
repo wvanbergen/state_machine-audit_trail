@@ -19,18 +19,30 @@ class MongoidTestModelStateTransition
   include Mongoid::Document
   include Mongoid::Timestamps
   belongs_to :mongoid_test_model
+
+  field :event, type: String
+  field :from,  type: String
+  field :to,    type: String
 end
 
 class MongoidTestModelWithMultipleStateMachinesFirstTransition
   include Mongoid::Document
   include Mongoid::Timestamps
   belongs_to :mongoid_test_model
+
+  field :event, type: String
+  field :from,  type: String
+  field :to,    type: String
 end
 
 class MongoidTestModelWithMultipleStateMachinesSecondTransition
   include Mongoid::Document
   include Mongoid::Timestamps
   belongs_to :mongoid_test_model
+
+  field :event, type: String
+  field :from,  type: String
+  field :to,    type: String
 end
 
 class MongoidTestModel
