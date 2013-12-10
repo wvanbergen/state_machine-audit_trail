@@ -1,0 +1,6 @@
+test:
+  sessions:
+    default:
+      database: sm_audit_trail
+      hosts:
+        - localhost:27017

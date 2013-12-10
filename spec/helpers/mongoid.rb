@@ -2,11 +2,17 @@ require 'mongoid'
 
 ### Setup test database
 
-Mongoid.configure do |config|
-  config.master = Mongo::Connection.new.db("sm_audit_trail")
+
+case Mongoid::VERSION
+when /^2\./
+  Mongoid.configure do |config|
+    config.master = Mongo::Connection.new.db("sm_audit_trail")
+  end
+when /^3\./, /^4\./
+  Mongoid.load!(File.expand_path('../mongoid.yml', __FILE__), :test)
+else
+  raise "Unsopported Mongoid version: Mongoid::VERSION"
 end
-
-
 
 # We probably want to provide a generator for this model and the accompanying migration.
 class MongoidTestModelStateTransition
