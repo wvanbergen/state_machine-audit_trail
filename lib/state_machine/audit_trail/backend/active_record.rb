@@ -3,9 +3,9 @@ class StateMachine::AuditTrail::Backend::ActiveRecord < StateMachine::AuditTrail
 
   def initialize(transition_class, owner_class, context_to_log = nil)
     self.context_to_log = context_to_log
-    @association = transition_class.to_s.tableize.to_sym
+    @association = transition_class.to_s.tableize.split('/').last.to_sym
     super transition_class
-    owner_class.has_many(@association) unless owner_class.reflect_on_association(@association)
+    owner_class.has_many(@association, :class_name => transition_class.to_s) unless owner_class.reflect_on_association(@association)
   end
 
   def log(object, event, from, to, timestamp = Time.now)
