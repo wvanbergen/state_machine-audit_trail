@@ -12,7 +12,7 @@ class StateMachine::AuditTrail::Backend::ActiveRecord < StateMachine::AuditTrail
     # Let ActiveRecord manage the timestamp for us so it does the 
     # right thing with regards to timezones.
     params = {:event => event, :from => from, :to => to}
-    params[self.context_to_log] = object.send(self.context_to_log) unless self.context_to_log.nil?
+    [context_to_log].flatten(1).each { |context| params[context] = object.send(context) } unless self.context_to_log.nil?
 
     if object.new_record?
       object.send(@association).build(params)
