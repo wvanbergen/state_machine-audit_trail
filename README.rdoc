@@ -21,6 +21,8 @@ Create a model/table that holds the audit trail. The table needs to have a forei
 
   rails generate state_machine:audit_trail <model> <state_attribute>
 
+  (For Rails 2, use rails generate state_machine_audit_trail <model> <state_attribute>  [note the underscore instead of the colon])
+
 For a model called "Model", and a state attribute "state", this will generate the ModelStateTransition model and an accompanying migration.
 
 Next, tell your state machine you want to store an audit trail:
