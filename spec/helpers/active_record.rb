@@ -16,6 +16,12 @@ ActiveRecord::Base.connection.create_table(:active_record_test_model_with_contex
   t.timestamps
 end
 
+ActiveRecord::Base.connection.create_table(:active_record_test_model_with_multiple_contexts) do |t|
+  t.string :state
+  t.string :type
+  t.timestamps
+end
+
 ActiveRecord::Base.connection.create_table(:active_record_test_model_with_multiple_state_machines) do |t|
   t.string :first
   t.string :second
@@ -28,6 +34,10 @@ class ActiveRecordTestModelStateTransition < ActiveRecord::Base
 end
 
 class ActiveRecordTestModelWithContextStateTransition < ActiveRecord::Base
+  belongs_to :test_model
+end
+
+class ActiveRecordTestModelWithMultipleContextStateTransition < ActiveRecord::Base
   belongs_to :test_model
 end
 
@@ -73,6 +83,28 @@ class ActiveRecordTestModelWithContext < ActiveRecord::Base
 
   def context
     "Some context"
+  end
+end
+
+class ActiveRecordTestModelWithMultipleContext < ActiveRecord::Base
+  state_machine :state, :initial => :waiting do # log initial state?
+    store_audit_trail :context_to_log => [:context, :second_context]
+
+    event :start do
+      transition [:waiting, :stopped] => :started
+    end
+
+    event :stop do
+      transition :started => :stopped
+    end
+  end
+
+  def context
+    "Some context"
+  end
+
+  def second_context
+    "Extra context"
   end
 end
 
@@ -152,12 +184,14 @@ def create_transition_table(owner_class, state, add_context = false)
     t.string :from
     t.string :to
     t.string :context if add_context
+    t.string :second_context if add_context
     t.datetime :created_at
   end
 end
 
 create_transition_table(ActiveRecordTestModel, :state)
 create_transition_table(ActiveRecordTestModelWithContext, :state, true)
+create_transition_table(ActiveRecordTestModelWithMultipleContext, :state, true)
 create_transition_table(ActiveRecordTestModelWithMultipleStateMachines, :first)
 create_transition_table(ActiveRecordTestModelWithMultipleStateMachines, :second)
 create_transition_table(ActiveRecordTestModelWithMultipleStateMachines, :third)

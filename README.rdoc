@@ -41,6 +41,8 @@ That's it! The plugin will register an <tt>after_transition</tt> callback that i
 
 If you would like to store additional messages in the audit trail, you can do so with the following:
     store_audit_trail :context_to_log => :state_message # Will grab the results of the state_message method on the model and store it in a field called state_message on the audit trail model
+or
+    store_audit_trail :context_to_log => [:field1, :field2] # Will grab the results of the field1 and field2 methods on the model and store them in fields called field1 and field2 on the audit trail model
 
 == About
 
