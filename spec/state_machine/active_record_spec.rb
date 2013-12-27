@@ -110,7 +110,7 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
     it "should only set the :to state for the initial transition" do
       state_machine_class.create!
       initial_transition = state_transition_class.last
-      initial_transition.event.should == ''
+      initial_transition.event.should be_nil
       initial_transition.from.should be_nil
       initial_transition.to.should == 'beginning'
       initial_transition.created_at.should be_within(10.seconds).of(Time.now.utc)
