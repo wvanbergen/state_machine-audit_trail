@@ -46,6 +46,29 @@ If you would like to store additional messages in the audit trail, you can do so
 or
     store_audit_trail :context_to_log => [:field1, :field2] # Will grab the results of the field1 and field2 methods on the model and store them in fields called field1 and field2 on the audit trail model
 
+=== Store virtual attributes
+
+Sometimes it can be useful to store dynamically computed information.
+
+In these situations it's just a matter of defining a new column on table <tt>DeploymentStateTransitions</tt> and configure <tt>context_to_log</tt>.
+
+i.e.
+
+  class Model < ActiveRecord::Base
+    state_machine :state, :initial => :start do
+      store_audit_trail :context_to_log => :version
+      ...
+
+    def version
+      # Dynamically computed field e.g., based on other models
+      ...
+
+  class AddVersionToDeploymentStateTransitions < ActiveRecord::Migration
+    def change
+      add_column :deployment_state_transitions, :version, :string
+      ...
+
+
 == About
 
 This plugin is written by Jesse Storimer and Willem van Bergen for Shopify. Mongoid support was contributed by Siddharth (https://github.com/svs). It is released under the MIT license (see LICENSE).
