@@ -153,6 +153,10 @@ class ActiveRecordTestModelWithMultipleStateMachines < ActiveRecord::Base
 end
 
 module SomeNamespace
+  class ActiveRecordTestModelStateTransition < ActiveRecord::Base
+    belongs_to :test_model
+  end
+
   class ActiveRecordTestModel < ActiveRecord::Base
 
     state_machine :state, :initial => :waiting do # log initial state?
@@ -168,13 +172,6 @@ module SomeNamespace
     end
   end
 end
-
-module SomeNamespace
-  class ActiveRecordTestModelStateTransition < ActiveRecord::Base
-    belongs_to :test_model
-  end
-end
-
 
 def create_transition_table(owner_class, state, add_context = false)
   class_name = "#{owner_class.name}#{state.to_s.camelize}Transition"

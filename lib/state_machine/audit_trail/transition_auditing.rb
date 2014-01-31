@@ -12,22 +12,28 @@ module StateMachine::AuditTrail::TransitionAuditing
   def store_audit_trail(options = {})
     state_machine = self
     state_machine.transition_class_name = (options[:to] || default_transition_class_name).to_s
+    state_machine.setup_backend(options[:context_to_log])
+
     state_machine.after_transition do |object, transition|
-      state_machine.audit_trail(options[:context_to_log]).log(object, transition.event, transition.from, transition.to)
+      state_machine.backend.log(object, transition.event, transition.from, transition.to)
     end
 
     unless state_machine.action == nil
       state_machine.owner_class.after_create do |object|
         if !object.send(state_machine.attribute).nil?
-          state_machine.audit_trail(options[:context_to_log]).log(object, nil, nil, object.send(state_machine.attribute))
+          state_machine.backend.log(object, nil, nil, object.send(state_machine.attribute))
         end
       end
     end
   end
 
+  def setup_backend(context_to_log = nil)
+    @backend = StateMachine::AuditTrail::Backend.create_for_transition_class(transition_class, self.owner_class, context_to_log)
+  end
+
   # Public returns an instance of the class which does the actual audit trail logging
-  def audit_trail(context_to_log = nil)
-    @transition_auditor ||= StateMachine::AuditTrail::Backend.create_for_transition_class(transition_class, self.owner_class, context_to_log)
+  def backend
+    @backend
   end
 
   private
