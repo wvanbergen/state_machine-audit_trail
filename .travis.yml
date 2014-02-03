@@ -4,6 +4,7 @@ services: mongodb
 rvm:
   - 1.9.3
   - 2.0.0
+  - 2.1.0
   - ruby-head
 gemfile:
  - Gemfile.activerecord3.mongoid2
