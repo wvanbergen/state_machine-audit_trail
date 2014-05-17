@@ -18,7 +18,7 @@ describe StateMachine::AuditTrail::Backend::Mongoid do
       last_transition.event.to_s.should == 'start'
       last_transition.from.should == 'waiting'
       last_transition.to.should == 'started'
-      last_transition.created_at.should be_within(10.seconds).of(Time.now.utc)
+      last_transition.created_at.should be_within(10.seconds).of(DateTime.now)
     end
     
     it "should log multiple events" do
@@ -56,7 +56,7 @@ describe StateMachine::AuditTrail::Backend::Mongoid do
       initial_transition.event.should be_nil
       initial_transition.from.should be_nil
       initial_transition.to.should == 'beginning'
-      initial_transition.created_at.should be_within(10.seconds).of(Time.now.utc)
+      initial_transition.created_at.should be_within(10.seconds).of(DateTime.now)
     end
   end
   
@@ -78,7 +78,7 @@ describe StateMachine::AuditTrail::Backend::Mongoid do
       first_transition.event.to_s.should == 'begin_second'
       first_transition.from.should be_nil
       first_transition.to.should == 'beginning_second'
-      first_transition.created_at.should be_within(10.seconds).of(Time.now.utc)
+      first_transition.created_at.should be_within(10.seconds).of(DateTime.now)
     end
   end
 
