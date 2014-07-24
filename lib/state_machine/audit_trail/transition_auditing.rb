@@ -15,7 +15,7 @@ module StateMachine::AuditTrail::TransitionAuditing
     state_machine.setup_backend(options[:context_to_log])
 
     state_machine.after_transition do |object, transition|
-      state_machine.backend.log(object, transition.event, transition.from, transition.to)
+      state_machine.backend.log(object, transition.event, transition.from, transition.to, Time.now, *transition.args)
     end
 
     unless state_machine.action == nil
