@@ -68,6 +68,23 @@ i.e.
       add_column :deployment_state_transitions, :version, :string
       ...
 
+It is also possible to pass arguments to methods that represents "virtual attributes" through event calling:
+
+  class Model < ActiveRecord::Base
+    state_machine :state, :initial => :start do
+      store_audit_trail :context_to_log => :user
+      ...
+      event :ignite do
+        transition start: :run
+        ...
+    end #state_machine
+
+    def user(id)
+      User.find(id)
+      ...
+
+  model = Model.first
+  model.ignite!(user_id)
 
 == About
 
