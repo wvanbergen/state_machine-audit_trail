@@ -74,7 +74,7 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
 
   context 'on an object with a single state machine that wants to log multiple context fields' do
     before do
-      backend = StateMachine::AuditTrail::Backend.create_for_transition_class(ActiveRecordTestModelWithMultipleContextStateTransition, ActiveRecordTestModelWithMultipleContext, [:context, :second_context])
+      backend = StateMachine::AuditTrail::Backend.create_for_transition_class(ActiveRecordTestModelWithMultipleContextStateTransition, ActiveRecordTestModelWithMultipleContext, [:context, :second_context, :context_with_args])
     end
 
     let!(:state_machine) { ActiveRecordTestModelWithMultipleContext.create! }
@@ -84,6 +84,12 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
       last_transition = ActiveRecordTestModelWithMultipleContextStateTransition.where(:active_record_test_model_with_multiple_context_id => state_machine.id).last
       last_transition.context.should == state_machine.context
       last_transition.second_context.should == state_machine.second_context
+    end
+
+    it "should log an event with passed arguments" do
+      state_machine.start!('one', 'two', 'three', 'for')
+      last_transition = ActiveRecordTestModelWithMultipleContextStateTransition.where(:active_record_test_model_with_multiple_context_id => state_machine.id).last
+      last_transition.context_with_args.should == state_machine.context_with_args('one', 'two', 'three', 'for')
     end
   end
 

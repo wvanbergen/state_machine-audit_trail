@@ -88,7 +88,7 @@ end
 
 class ActiveRecordTestModelWithMultipleContext < ActiveRecord::Base
   state_machine :state, :initial => :waiting do # log initial state?
-    store_audit_trail :context_to_log => [:context, :second_context]
+    store_audit_trail context_to_log: [:context, :second_context, :context_with_args]
 
     event :start do
       transition [:waiting, :stopped] => :started
@@ -106,6 +106,11 @@ class ActiveRecordTestModelWithMultipleContext < ActiveRecord::Base
   def second_context
     "Extra context"
   end
+
+  def context_with_args(*one)
+    "#{one}"
+  end
+
 end
 
 class ActiveRecordTestModelDescendant < ActiveRecordTestModel
@@ -182,6 +187,7 @@ def create_transition_table(owner_class, state, add_context = false)
     t.string :to
     t.string :context if add_context
     t.string :second_context if add_context
+    t.string :context_with_args if add_context
     t.datetime :created_at
   end
 end
