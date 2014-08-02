@@ -79,12 +79,19 @@ It is also possible to pass arguments to methods that represents "virtual attrib
         ...
     end #state_machine
 
-    def user(id)
-      User.find(id)
+    # user-method receives a state_machine transition object, see state_machine docs
+    def user(transition)
+      # ['arg1', 'arg2', 'arg3', {id: 1}]
+      if transition.args.present?
+        id = transition.args.last.delete(:id)
+        User.find(id).name
+      else
+        'Undefined User'
+      end
       ...
 
   model = Model.first
-  model.ignite!(user_id)
+  model.ignite!('arg1, 'arg2', 'arg3', id: 1)
 
 == About
 
