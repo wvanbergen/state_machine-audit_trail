@@ -6,13 +6,11 @@ class StateMachine::AuditTrail::Backend::Mongoid < StateMachine::AuditTrail::Bac
   # Public writes the log to the database
   #
   # object: the object being watched by the state_machine observer
-  # event:  the event being observed by the state machine
-  # from:   the state of the object prior to the event
-  # to:     the state of the object after the event
-  def log(object, event, from, to, timestamp = Time.now)
+  # transition: state machine transition object that state machine passes to after/before transition callbacks
+  def log(object, transition, timestamp = Time.now)
     tc = transition_class
     foreign_key_field = tc.relations.keys.first
-    transition_class.create(foreign_key_field => object, :event => event, :from => from, :to => to, :created_at => timestamp)
+    transition_class.create(foreign_key_field => object, :event => transition.event, :from => transition.from, :to => transition.to, :created_at => timestamp)
   end
 
 

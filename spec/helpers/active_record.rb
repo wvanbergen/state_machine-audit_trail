@@ -107,8 +107,9 @@ class ActiveRecordTestModelWithMultipleContext < ActiveRecord::Base
     "Extra context"
   end
 
-  def context_with_args(*one)
-    "#{one}"
+  def context_with_args(transition)
+    id = transition.args.last.delete(:id) if transition.args.present?
+    id
   end
 
 end

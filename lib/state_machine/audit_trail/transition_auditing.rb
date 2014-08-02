@@ -1,3 +1,4 @@
+ require 'ostruct'
 # this class inserts the appropriate hooks into the state machine.
 # it also contains functions to instantiate an object of the "transition_class"
 # the transition_class is the class for the model which holds the audit_trail
@@ -15,13 +16,13 @@ module StateMachine::AuditTrail::TransitionAuditing
     state_machine.setup_backend(options[:context_to_log])
 
     state_machine.after_transition do |object, transition|
-      state_machine.backend.log(object, transition.event, transition.from, transition.to, Time.now, *transition.args)
+      state_machine.backend.log(object, transition)
     end
 
     unless state_machine.action == nil
       state_machine.owner_class.after_create do |object|
         if !object.send(state_machine.attribute).nil?
-          state_machine.backend.log(object, nil, nil, object.send(state_machine.attribute))
+          state_machine.backend.log(object, OpenStruct.new(:to => object.send(state_machine.attribute)))
         end
       end
     end

@@ -8,11 +8,11 @@ class StateMachine::AuditTrail::Backend::ActiveRecord < StateMachine::AuditTrail
     owner_class.has_many(@association, :class_name => transition_class.to_s) unless owner_class.reflect_on_association(@association)
   end
 
-  def log(object, event, from, to, timestamp = Time.now, *args)
+  def log(object, transition, timestamp = Time.now)
     # Let ActiveRecord manage the timestamp for us so it does the 
     # right thing with regards to timezones.
-    params = {:event => event ? event.to_s : nil, :from => from, :to => to}
-    [context_to_log].flatten(1).each { |context| params[context] = check_arity_and_send(object, context, *args) } unless self.context_to_log.nil?
+    params = {:event => transition.event ? transition.event.to_s : nil, :from => transition.from, :to => transition.to}
+    [context_to_log].flatten(1).each { |context| params[context] = check_arity_and_send(object, context, transition) } unless self.context_to_log.nil?
 
     if object.new_record?
       object.send(@association).build(params)
@@ -25,9 +25,9 @@ class StateMachine::AuditTrail::Backend::ActiveRecord < StateMachine::AuditTrail
 
   private
 
-  def check_arity_and_send(object, context, *args)
+  def check_arity_and_send(object, context, transition)
     if object.public_method(context).arity != 0
-      object.public_send(context, *args)
+      object.public_send(context, transition)
     else
       object.public_send(context)
     end
