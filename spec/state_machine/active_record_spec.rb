@@ -87,7 +87,7 @@ describe StateMachine::AuditTrail::Backend::ActiveRecord do
     end
 
     it "should log an event with passed arguments" do
-      state_machine.start!('one', 'two', 'three', 'for', id: 1)
+      state_machine.start!('one', 'two', 'three', 'for', :id => 1)
       last_transition = ActiveRecordTestModelWithMultipleContextStateTransition.where(:active_record_test_model_with_multiple_context_id => state_machine.id).last
       last_transition.context_with_args.should == '1'
     end

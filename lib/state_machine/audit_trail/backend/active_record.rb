@@ -26,10 +26,10 @@ class StateMachine::AuditTrail::Backend::ActiveRecord < StateMachine::AuditTrail
   private
 
   def check_arity_and_send(object, context, transition)
-    if object.public_method(context).arity != 0
-      object.public_send(context, transition)
+    if object.method(context).arity != 0
+      object.send(context, transition)
     else
-      object.public_send(context)
+      object.send(context)
     end
   end
 end

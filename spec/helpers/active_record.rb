@@ -88,7 +88,7 @@ end
 
 class ActiveRecordTestModelWithMultipleContext < ActiveRecord::Base
   state_machine :state, :initial => :waiting do # log initial state?
-    store_audit_trail context_to_log: [:context, :second_context, :context_with_args]
+    store_audit_trail :context_to_log => [:context, :second_context, :context_with_args]
 
     event :start do
       transition [:waiting, :stopped] => :started
