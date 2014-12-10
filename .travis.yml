@@ -10,6 +10,11 @@ rvm:
   - 2.1.1
   - ruby-head
 
+gemfile:
+  - Gemfile.rails32
+  - Gemfile.rails40
+  - Gemfile.rails41
+
 matrix:
   allow_failures:
     - rvm: ruby-head
