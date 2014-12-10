@@ -3,7 +3,7 @@ require 'mongoid'
 ### Setup test database
 
 Mongoid.configure do |config|
-  config.master = Mongo::Connection.new.db("sm_audit_trail")
+  config.connect_to("sm_audit_trail")
 end
 
 
@@ -28,17 +28,17 @@ class MongoidTestModelWithMultipleStateMachinesSecondTransition
 end
 
 class MongoidTestModel
-  
+
   include Mongoid::Document
   include Mongoid::Timestamps
-  
+
   state_machine :state, :initial => :waiting do # log initial state?
     store_audit_trail :orm => :mongoid
 
     event :start do
       transition [:waiting, :stopped] => :started
     end
-    
+
     event :stop do
       transition :started => :stopped
     end
@@ -50,20 +50,20 @@ class MongoidTestModelDescendant < MongoidTestModel
 end
 
 class MongoidTestModelWithMultipleStateMachines
-  
+
   include Mongoid::Document
   include Mongoid::Timestamps
 
   state_machine :first, :initial => :beginning do
-    store_audit_trail 
+    store_audit_trail
 
     event :begin_first do
       transition :beginning => :end
     end
   end
-  
+
   state_machine :second do
-    store_audit_trail 
+    store_audit_trail
 
     event :begin_second do
       transition nil => :beginning_second
