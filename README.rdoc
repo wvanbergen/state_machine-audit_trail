@@ -1,6 +1,10 @@
 = StateMachine audit trail {<img src="https://travis-ci.org/wvanbergen/state_machine-audit_trail.png" />}[https://travis-ci.org/wvanbergen/state_machine-audit_trail]
 
-<b>Deprecated:</b> this gem is deprecated and no longer maintained due to unmaintained, outdated, and conflicting depdencies. If you are interested in reviving this gem, please get in touch.
+== Superceded
+This gem has been superceded by {state_machines-audit_trail}[https://github.com/state-machines/state_machines-audit_trail].  For more information, see {the wiki on converting to the new gem.}[https://github.com/state-machines/state_machines-audit_trail/wiki/Converting-from-former-state_machine-audit_trail-to-state_machines-audit_trail]. 
+
+== Deprecated
+This gem is deprecated and no longer maintained due to unmaintained, outdated, and conflicting depdencies.
 
 This plugin for the state machine gem (see https://github.com/pluginaweek/state_machine) adds support for keeping an audit trail for any state machine. Having an audit trail gives you a complete history of the state changes in your model. This history allows you to investigate incidents or perform analytics, like: "How long does it take on average to go from state a to state b?", or "What percentage of cases goes from state a to b via state c?"
 
