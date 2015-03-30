@@ -14,7 +14,9 @@ Gem::Specification.new do |s|
   s.summary     = %q{Log transitions on a state machine to support auditing and business process analytics.}
   s.description = %q{Log transitions on a state machine to support auditing and business process analytics.}
   s.license     = "MIT"
-
+  
+  s.post_install_message = "This gem is deprecated.  Please see https://github.com/state-machines/state_machines-audit_trail/wiki/Converting-from-former-state_machine-audit_trail-to-state_machines-audit_trail for instructions on converting to the gem that now maintains this functionality."
+  
   s.rubyforge_project = "state_machine"
 
   s.add_runtime_dependency('state_machine')
